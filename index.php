@@ -17,10 +17,10 @@ if (isset($_SESSION['msg'])) {
 }
 $uid = $_SESSION['user'];
 $sql = "SELECT * FROM notes WHERE userid='$uid'";
-$res = mysqli_query($GLOBALS['db'],$sql);
+$res = mysqli_query($GLOBALS['db'], $sql);
 
 $sql = "SELECT label, count(label) as count FROM notes WHERE userid='$uid' Group By label";
-$labels = mysqli_query($GLOBALS['db'],$sql);
+$labels = mysqli_query($GLOBALS['db'], $sql);
 // $row = mysqli_fetch_assoc($res2);
 
 ?>
@@ -113,24 +113,24 @@ $labels = mysqli_query($GLOBALS['db'],$sql);
           <h4>Your Notes</h4>
           <hr class="w-75">
           <ul class="list-group">
-            <?php while($note = mysqli_fetch_assoc($res)): ?>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="note col-sm-8">
-                  <h5><?=$note['title']?><span class="ms-2 badge bg-primary"><?=$note['label']?></span></h5>
-                  <p><?=$note['body']?></p>
-                  <input type="hidden" name="id" value="<?=$note['id']?>">
-                </div>
-                <div class="col-sm-4 text-end">
-                  
-                  <!-- <button class="btn btn-outline-primary btn-sm me-2">
+            <?php while ($note = mysqli_fetch_assoc($res)) : ?>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="note col-sm-8">
+                    <h5><?= $note['title'] ?><span class="ms-2 badge bg-primary"><?= $note['label'] ?></span></h5>
+                    <p><?= $note['body'] ?></p>
+                    <input type="hidden" name="id" value="<?= $note['id'] ?>">
+                  </div>
+                  <div class="col-sm-4 text-end">
+
+                    <!-- <button class="btn btn-outline-primary btn-sm me-2">
                     Edit
                   </button> -->
-                  <button class="btn btn-danger btn-sm" onclick="del(this)">Delete</button>
+                    <button class="btn btn-danger btn-sm" onclick="del(this)">Delete</button>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <?php endwhile?>
+              </li>
+            <?php endwhile ?>
 
           </ul>
         </article>
@@ -140,15 +140,15 @@ $labels = mysqli_query($GLOBALS['db'],$sql);
           <h4>All Labels</h4>
           <hr class="w-75">
           <ol class="list-group list-group-numbered">
-            <?php while($c = mysqli_fetch_assoc($labels)):?>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
+            <?php while ($c = mysqli_fetch_assoc($labels)) : ?>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
 
-                <a class="" href="#"><?=$c['label']?></a>
-              </div>
-              <span class="badge bg-primary rounded-pill"><?=$c['count']?></span>
-            </li>
-            <?php endwhile?>
+                  <a class="" href="#"><?= $c['label'] ?></a>
+                </div>
+                <span class="badge bg-primary rounded-pill"><?= $c['count'] ?></span>
+              </li>
+            <?php endwhile ?>
           </ol>
         </aside>
       </div>
@@ -156,34 +156,34 @@ $labels = mysqli_query($GLOBALS['db'],$sql);
   </div>
   <!-- data-bs-toggle="modal" data-bs-target="#exampleModal" -->
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="deletenote.php" method="post">
-      
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Are you sure to delete?</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="deletenote.php" method="post">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure to delete?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div id="modalBody" class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </div>
+        </form>
       </div>
-      <div id="modalBody" class="modal-body">
-        
-      </div>
-      <div class="modal-footer">
-        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-danger">Delete</button>
-      </div>
-      </form>
     </div>
   </div>
-</div>
 
   <?php include_once('layout/_footer.php') ?>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
   <script>
-    function del(e){
+    function del(e) {
       var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
       var modalBody = document.getElementById('modalBody');
       modalBody.innerHTML = e.parentElement.parentElement.querySelector('.note').innerHTML;

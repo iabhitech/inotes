@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if (sendOTP($email)) {
     $msg = "OTP has been sent on  your Email.";
   } else {
-    $error = "Unable to send OTP!";
+    $error = "Unable to send OTP! <a href='?resend'>Resend</a>";
   }
 }
 session_start();
@@ -121,7 +121,7 @@ mysqli_close($GLOBALS['db']);
                     <i class="fas fa-3x text-primary fa-book-open"></i>
                     <div>iNotes - Verify Email</div>
                   </div>
-                  <p>Hello Abhi</p>
+                  <p>Hello User,</p>
                   <?php if (isset($error)) : ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                       <?= $error ?>
